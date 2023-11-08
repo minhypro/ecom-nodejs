@@ -1,0 +1,12 @@
+# baseURL
+@baseURL = http://localhost:5000/v1/api
+
+### signup
+POST {{ baseURL }}/signup
+Content-Type: application/json
+
+{
+    "name": "Shop check2",
+    "email": "example0232@email.com",
+	"password": "password"
+}
