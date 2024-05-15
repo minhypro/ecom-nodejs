@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "dotenv -e .env node dist/server.js",
     "dev": "dotenv -e .env.local nodemon",
     "format": "prettier --write \"./**/*.{js,ts,json}\" --config ./.prettierrc.json",
@@ -39,6 +39,7 @@
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2"
   }

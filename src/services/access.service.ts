@@ -55,12 +55,7 @@ export class AuthService {
           };
         }
         // Create token pair
-        const tokens = createTokenPair(
-          { userId: newShop._id, email },
-          storedKeyToken.publicKey,
-          storedKeyToken.privateKey,
-        );
-        console.log('Created Token successfully', tokens);
+        const tokens = createTokenPair({ userId: newShop._id, email }, publicKey, privateKey);
 
         return {
           code: 201,

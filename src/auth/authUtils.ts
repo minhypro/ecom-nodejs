@@ -15,13 +15,13 @@ export const createTokenPair = (
       expiresIn: '7 days',
     });
 
-    // JWT.verify(accessToken, publicKey, (err: VerifyErrors, decode: string) => {
-    //   if (err) {
-    //     console.error('error verify::', err);
-    //   } else {
-    //     console.log('decode verify::', decode);
-    //   }
-    // });
+    JWT.verify(accessToken, publicKey, (err: VerifyErrors, decode: string) => {
+      if (err) {
+        console.error('error verify::', err);
+      } else {
+        console.log('decode verify::', decode);
+      }
+    });
 
     return { accessToken, refreshToken };
   } catch (error) {}

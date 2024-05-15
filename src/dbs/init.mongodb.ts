@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { dbConfig, environment } from '@config';
+import config, { environment } from '@config';
 
-const { HOST, PORT, NAME } = dbConfig;
+const { HOST, PORT, NAME } = config.db;
 const connectString = `mongodb://${HOST}:${PORT}/${NAME}`;
 
 class Database {

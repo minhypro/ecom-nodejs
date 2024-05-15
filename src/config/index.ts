@@ -1,9 +1,29 @@
 const { NODE_ENV, MONGO_URI, MONGO_PORT, MONGO_NAME } = process.env;
 
-export const dbConfig = {
-  HOST: MONGO_URI || 'localhost',
-  PORT: MONGO_PORT || '27017',
-  NAME: MONGO_NAME || 'shopDev',
+const dev = {
+  app: {
+    port: 3001,
+  },
+  db: {
+    HOST: MONGO_URI || 'localhost',
+    PORT: MONGO_PORT || '27017',
+    NAME: MONGO_NAME || 'shopDev',
+  },
 };
 
-export const environment = NODE_ENV || 'dev';
+const pro = {
+  app: {
+    port: 3000,
+  },
+  db: {
+    HOST: MONGO_URI || 'localhost',
+    PORT: MONGO_PORT || '27017',
+    NAME: MONGO_NAME || 'shopPro',
+  },
+};
+
+export const environment = NODE_ENV || 'pro';
+
+const config = { dev, pro };
+
+export default config[environment] as typeof dev;
