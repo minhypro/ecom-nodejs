@@ -1,9 +1,10 @@
 # baseURL
-@baseURL = http://localhost:5000/v1/api
+@baseURL = http://localhost:5001/v1/api
 
 ### signup
 POST {{ baseURL }}/signup
 Content-Type: application/json
+x-api-key: 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
 
 {
     "name": "Shop check2",

@@ -1,4 +1,5 @@
 import { API_KEY_COLLECTION, API_KEY_DOCUMENT } from '@/constants';
+import { PERMISSIONS } from '@/enums/permission.enum';
 import { IApiKey } from '@/interfaces';
 import { model, Schema } from 'mongoose';
 
@@ -15,6 +16,7 @@ const apiKeySchema = new Schema<IApiKey>(
     permissions: {
       type: [String],
       required: true,
+      enum: PERMISSIONS,
     },
   },
   {

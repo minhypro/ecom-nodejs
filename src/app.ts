@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { instanceMongodb } from './dbs/init.mongodb';
 import { router } from './routes';
+import { ErrorResponse } from './core/error.response';
 // import dotenv from 'dotenv'
 
 // dotenv.config()
@@ -24,5 +25,16 @@ instanceMongodb;
 app.use(router);
 
 // Handling errors
+app.use((req, res, next) => {
+  const error = new ErrorResponse('Not found', 404);
+
+  next(error);
+});
+
+app.use((error: ErrorResponse, req, res, next) => {
+  const statusCode = error.statusCode || 500;
+  const message = error.message || 'Internal server error';
+  res.status(statusCode).json({ message });
+});
 
 export default app;

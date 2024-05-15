@@ -10,8 +10,8 @@
     "build": "tsc && tsc-alias",
     "start": "dotenv -e .env node dist/server.js",
     "dev": "dotenv -e .env.local nodemon",
-    "format": "prettier --write \"./**/*.{js,ts,json}\" --config ./.prettierrc.json",
-    "type-check": "tsc --noEmit"
+    "format": "prettier src --write",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "minhypro",
