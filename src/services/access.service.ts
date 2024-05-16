@@ -55,11 +55,8 @@ export class AuthService {
       const tokens = createTokenPair({ userId: newShop._id, email }, publicKey, privateKey);
 
       return {
-        code: 201,
-        metadata: {
-          shop: pickData({ fields: ['_id', 'email', 'name'], object: newShop }),
-          tokens,
-        },
+        shop: pickData({ fields: ['_id', 'email', 'name'], object: newShop }),
+        tokens,
       };
       // const token = await
     }

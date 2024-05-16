@@ -9,19 +9,19 @@ export class ErrorResponse extends Error {
 }
 
 export class ConflictedError extends ErrorResponse {
-  constructor(message = ReasonStatusCode.CONFLICT, statusCode = StatusCode.CONFLICT) {
+  constructor(message = ReasonStatusCode[StatusCode.CONFLICT], statusCode = StatusCode.CONFLICT) {
     super(message, statusCode);
   }
 }
 
 export class BadRequestError extends ErrorResponse {
-  constructor(message = ReasonStatusCode.BAD_REQUEST, statusCode = StatusCode.BAD_REQUEST) {
+  constructor(message = ReasonStatusCode[StatusCode.BAD_REQUEST], statusCode = StatusCode.BAD_REQUEST) {
     super(message, statusCode);
   }
 }
 
 export class ForbiddenError extends ErrorResponse {
-  constructor(message = ReasonStatusCode.FORBIDDEN, statusCode = StatusCode.FORBIDDEN) {
+  constructor(message = ReasonStatusCode[StatusCode.FORBIDDEN], statusCode = StatusCode.FORBIDDEN) {
     super(message, statusCode);
   }
 }
