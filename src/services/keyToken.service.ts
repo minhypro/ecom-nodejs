@@ -6,6 +6,7 @@ export class KeyTokenService {
     userId,
     publicKey,
     privateKey,
+    refreshToken,
   }: ICreateKeyToken): Promise<IKeyToken> => {
     try {
       // Level 0
@@ -17,14 +18,22 @@ export class KeyTokenService {
       // return token;
 
       // Level xxx
-      const filter = { user: userId };
+      const filter = { user: userId },
+        update = {
+          publicKey,
+          privateKey,
+          refreshTokenUsed: [],
+          refreshToken,
+        },
+        options = { upsert: true, new: true };
 
-      // TODO Implement newKeyToken logic
       const token = await keyTokenModel.findOneAndUpdate(
         filter,
         update,
         options,
       );
+
+      return token;
     } catch (error) {
       return error;
     }

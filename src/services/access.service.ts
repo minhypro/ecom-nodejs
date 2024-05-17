@@ -7,6 +7,7 @@ import crypto from 'node:crypto';
 import { KeyTokenService } from './keyToken.service';
 import { AuthorizeFailed, BadRequestError } from '@/core/error.response';
 import { ShopService } from './shop.service';
+import { ApiKeyService } from './apiKey.service';
 
 export class AuthService {
   static login = async ({ email, password }) => {
@@ -25,8 +26,12 @@ export class AuthService {
       privateKey,
     );
 
-    // TODO Apply new token logic
-    await KeyTokenService.createKeyToken({});
+    await KeyTokenService.createKeyToken({
+      userId: foundShop._id,
+      publicKey,
+      privateKey,
+      refreshToken: tokens.refreshToken,
+    });
 
     return {
       shop: pickData({ fields: ['_id', 'email', 'name'], object: foundShop }),
@@ -39,6 +44,8 @@ export class AuthService {
     if (shopHolder) {
       throw new BadRequestError('Shop already exists');
     }
+
+    ApiKeyService.generate();
 
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newShop = await shopModel.create({
@@ -67,10 +74,17 @@ export class AuthService {
       const privateKey = crypto.randomBytes(64).toString('hex');
       const publicKey = crypto.randomBytes(64).toString('hex');
 
+      const tokens = createTokenPair(
+        { userId: newShop._id, email },
+        publicKey,
+        privateKey,
+      );
+
       const storedKeyToken = await KeyTokenService.createKeyToken({
         userId: newShop._id,
         publicKey,
         privateKey,
+        refreshToken: tokens.refreshToken,
       });
 
       if (!storedKeyToken) {
@@ -79,12 +93,6 @@ export class AuthService {
           massage: 'Store key token error',
         };
       }
-      // Create token pair
-      const tokens = createTokenPair(
-        { userId: newShop._id, email },
-        publicKey,
-        privateKey,
-      );
 
       return {
         shop: pickData({ fields: ['_id', 'email', 'name'], object: newShop }),

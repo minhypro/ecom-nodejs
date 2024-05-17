@@ -21,9 +21,13 @@ const keyTokenSchema = new Schema<IKeyToken>(
       type: String,
       required: true,
     },
-    refreshToken: {
+    refreshTokenUsed: {
       type: [String],
       default: [],
+    },
+    refreshToken: {
+      type: String,
+      required: true,
     },
   },
   {

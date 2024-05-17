@@ -1,10 +1,12 @@
 # baseURL
 @baseURL = http://localhost:5001/v1/api
+@pcHomeApi = 94fc697eaf79cd1b49446d31945c228232d17c6bc90389702453c57202dc979f6b3fc7c981ff1d63cf7d0517c5e0191b740fe6c54e656849957e2cce3120eac9
+@laptopApi = 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
 
 ### signup
 POST {{ baseURL }}/signup
 Content-Type: application/json
-x-api-key: 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
+x-api-key: {{pcHomeApi}}
 
 {
     "name": "Shop check2",
@@ -15,9 +17,9 @@ x-api-key: 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9
 ### login
 POST {{ baseURL }}/login
 Content-Type: application/json
-x-api-key: 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
+x-api-key: {{pcHomeApi}}
 
 {
     "email": "example122@email.com",
-	"password": "password2"
+	"password": "password"
 }
