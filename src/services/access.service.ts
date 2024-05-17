@@ -5,9 +5,35 @@ import { pickData } from '@/utils';
 import bcrypt from 'bcrypt';
 import crypto from 'node:crypto';
 import { KeyTokenService } from './keyToken.service';
-import { BadRequestError } from '@/core/error.response';
+import { AuthorizeFailed, BadRequestError } from '@/core/error.response';
+import { ShopService } from './shop.service';
 
 export class AuthService {
+  static login = async ({ email, password }) => {
+    const foundShop = await ShopService.findByEmail({ email });
+    if (!foundShop) throw new AuthorizeFailed('Shop not found');
+
+    const match = bcrypt.compareSync(password, foundShop.password);
+    if (!match) throw new AuthorizeFailed('Wrong password');
+
+    const privateKey = crypto.randomBytes(64).toString('hex');
+    const publicKey = crypto.randomBytes(64).toString('hex');
+
+    const tokens = createTokenPair(
+      { userId: foundShop._id, email },
+      publicKey,
+      privateKey,
+    );
+
+    // TODO Apply new token logic
+    await KeyTokenService.createKeyToken({});
+
+    return {
+      shop: pickData({ fields: ['_id', 'email', 'name'], object: foundShop }),
+      tokens,
+    };
+  };
+
   static signUp = async ({ name, email, password }) => {
     const shopHolder = await shopModel.findOne({ email }).lean();
     if (shopHolder) {
@@ -23,7 +49,9 @@ export class AuthService {
     });
 
     if (newShop) {
+      // Not use this version because it's cost too much time to generate key pair
       // Create privateKey (use to sign token), publicKey (use to verify token)
+
       // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
       //   modulusLength: 2048,
       //   publicKeyEncoding: {
@@ -52,7 +80,11 @@ export class AuthService {
         };
       }
       // Create token pair
-      const tokens = createTokenPair({ userId: newShop._id, email }, publicKey, privateKey);
+      const tokens = createTokenPair(
+        { userId: newShop._id, email },
+        publicKey,
+        privateKey,
+      );
 
       return {
         shop: pickData({ fields: ['_id', 'email', 'name'], object: newShop }),

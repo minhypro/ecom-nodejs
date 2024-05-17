@@ -112,7 +112,8 @@ export const ReasonStatusCode = {
   [StatusCode.UPGRADE_REQUIRED]: 'Upgrade Required',
   [StatusCode.PRECONDITION_REQUIRED]: 'Precondition Required',
   [StatusCode.TOO_MANY_REQUESTS]: 'Too Many Requests',
-  [StatusCode.REQUEST_HEADER_FIELDS_TOO_LARGE]: 'Request Header Fields Too Large',
+  [StatusCode.REQUEST_HEADER_FIELDS_TOO_LARGE]:
+    'Request Header Fields Too Large',
   [StatusCode.UNAVAILABLE_FOR_LEGAL_REASONS]: 'Unavailable For Legal Reasons',
   [StatusCode.INTERNAL_SERVER_ERROR]: 'Internal Server Error',
   [StatusCode.NOT_IMPLEMENTED]: 'Not Implemented',
@@ -124,5 +125,6 @@ export const ReasonStatusCode = {
   [StatusCode.INSUFFICIENT_STORAGE]: 'Insufficient Storage',
   [StatusCode.LOOP_DETECTED]: 'Loop Detected',
   [StatusCode.NOT_EXTENDED]: 'Not Extended',
-  [StatusCode.NETWORK_AUTHENTICATION_REQUIRED]: 'Network Authentication Required',
+  [StatusCode.NETWORK_AUTHENTICATION_REQUIRED]:
+    'Network Authentication Required',
 };

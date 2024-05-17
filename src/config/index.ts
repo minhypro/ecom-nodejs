@@ -23,6 +23,7 @@ const pro = {
 };
 
 export const environment = NODE_ENV || 'pro';
+export const isDevEnv = environment === 'dev';
 
 const config = { dev, pro };
 

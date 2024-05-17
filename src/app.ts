@@ -5,6 +5,7 @@ import compression from 'compression';
 import { instanceMongodb } from './dbs/init.mongodb';
 import { router } from './routes';
 import { ErrorResponse } from './core/error.response';
+import { ReasonStatusCode, StatusCode } from './constants';
 // import dotenv from 'dotenv'
 
 // dotenv.config()
@@ -32,8 +33,9 @@ app.use((req, res, next) => {
 });
 
 app.use((error: ErrorResponse, req, res, next) => {
-  const statusCode = error.statusCode || 500;
-  const message = error.message || 'Internal server error';
+  const statusCode = error.statusCode || StatusCode.INTERNAL_SERVER_ERROR;
+  const message =
+    error.message || ReasonStatusCode[StatusCode.INTERNAL_SERVER_ERROR];
   res.status(statusCode).json({ message });
 });
 

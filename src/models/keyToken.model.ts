@@ -1,4 +1,8 @@
-import { KEY_TOKEN_COLLECTION, KEY_TOKEN_DOCUMENT, SHOP_DOCUMENT } from '@/constants';
+import {
+  KEY_TOKEN_COLLECTION,
+  KEY_TOKEN_DOCUMENT,
+  SHOP_DOCUMENT,
+} from '@/constants';
 import { IKeyToken } from '@/interfaces';
 import { model, Schema } from 'mongoose';
 

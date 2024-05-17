@@ -8,6 +8,16 @@ x-api-key: 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9
 
 {
     "name": "Shop check2",
-    "email": "example0232@email.com",
+    "email": "example122@email.com",
 	"password": "password"
+}
+
+### login
+POST {{ baseURL }}/login
+Content-Type: application/json
+x-api-key: 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
+
+{
+    "email": "example122@email.com",
+	"password": "password2"
 }

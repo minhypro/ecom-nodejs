@@ -11,7 +11,11 @@ interface CustomRequest extends Request {
   apiKey: IApiKey;
 }
 
-export const checkApiKey = async (req: CustomRequest, res: Response, next: NextFunction) => {
+export const checkApiKey = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const key = req.headers[HEADER.API_KEY]?.toString();
 
@@ -42,5 +46,6 @@ export const checkPermission = (permission: string) => {
   };
 };
 
-export const asyncHandler = (fn: Function) => (req: Request, res: Response, next: NextFunction) =>
-  Promise.resolve(fn(req, res, next)).catch(next);
+export const asyncHandler =
+  (fn: Function) => (req: Request, res: Response, next: NextFunction) =>
+    Promise.resolve(fn(req, res, next)).catch(next);

@@ -1,4 +1,4 @@
-import { CREATED } from '@/core/success.response';
+import { CREATED, OK } from '@/core/success.response';
 import { AuthService } from '@/services/access.service';
 import { Request, Response, NextFunction } from 'express';
 
@@ -7,6 +7,13 @@ class AccessController {
     new CREATED({
       message: 'User created successfully',
       metadata: await AuthService.signUp(req.body),
+    }).send(res);
+  };
+
+  public static login = async (req: Request, res: Response) => {
+    new OK({
+      message: 'Login successfully',
+      metadata: await AuthService.login(req.body),
     }).send(res);
   };
 }
