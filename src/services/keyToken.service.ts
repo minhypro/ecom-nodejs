@@ -38,4 +38,22 @@ export class KeyTokenService {
       return error;
     }
   };
+
+  static findKeyToken = async (userId: string): Promise<IKeyToken> => {
+    try {
+      const token = await keyTokenModel.findOne({ user: userId });
+      return token;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  static deleteKeyToken = async (keyId: string): Promise<IKeyToken> => {
+    try {
+      const token = await keyTokenModel.findByIdAndRemove(keyId);
+      return token;
+    } catch (error) {
+      return error;
+    }
+  };
 }

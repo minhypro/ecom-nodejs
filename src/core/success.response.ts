@@ -3,17 +3,17 @@ import { Response } from 'express';
 
 class SussessResponse {
   message: string;
-  statusCode: number;
+  status: number;
   metadata: any;
 
   constructor({ message, statusCode = StatusCode.OK, metadata = {} }) {
     this.message = message || ReasonStatusCode[statusCode];
-    this.statusCode = statusCode;
+    this.status = statusCode;
     this.metadata = metadata;
   }
 
   send(res: Response) {
-    return res.status(this.statusCode).json(this);
+    return res.status(this.status).json(this);
   }
 }
 

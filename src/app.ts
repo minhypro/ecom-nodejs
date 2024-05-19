@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -26,17 +26,25 @@ instanceMongodb;
 app.use(router);
 
 // Handling errors
-app.use((req, res, next) => {
+app.use((_req, _res, next) => {
   const error = new ErrorResponse('Not found', 404);
 
   next(error);
 });
 
-app.use((error: ErrorResponse, req, res, next) => {
-  const statusCode = error.statusCode || StatusCode.INTERNAL_SERVER_ERROR;
-  const message =
-    error.message || ReasonStatusCode[StatusCode.INTERNAL_SERVER_ERROR];
-  res.status(statusCode).json({ message });
-});
+app.use(
+  (error: ErrorResponse, _req: Request, res: Response, _next: NextFunction) => {
+    const statusCode = error.status || StatusCode.INTERNAL_SERVER_ERROR;
+    const message =
+      error.message || ReasonStatusCode[StatusCode.INTERNAL_SERVER_ERROR];
+
+    const response = {
+      message: message,
+      status: statusCode,
+    };
+
+    res.status(statusCode).json(response);
+  },
+);
 
 export default app;

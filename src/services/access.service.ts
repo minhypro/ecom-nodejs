@@ -8,8 +8,16 @@ import { KeyTokenService } from './keyToken.service';
 import { AuthorizeFailed, BadRequestError } from '@/core/error.response';
 import { ShopService } from './shop.service';
 import { ApiKeyService } from './apiKey.service';
+import { IKeyToken } from '@/interfaces';
 
 export class AuthService {
+  static logout = async (keyStore: IKeyToken) => {
+    await KeyTokenService.deleteKeyToken(keyStore._id);
+    return {
+      logout: true,
+    };
+  };
+
   static login = async ({ email, password }) => {
     const foundShop = await ShopService.findByEmail({ email });
     if (!foundShop) throw new AuthorizeFailed('Shop not found');

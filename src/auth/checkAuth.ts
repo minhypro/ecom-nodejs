@@ -1,11 +1,7 @@
+import { HEADER } from '@/constants/header.keys.const';
 import { IApiKey } from '@/interfaces';
 import { ApiKeyService } from '@/services/apiKey.service';
 import { Request, Response, NextFunction } from 'express';
-
-const HEADER = {
-  API_KEY: 'x-api-key',
-  AUTHORIZATION: 'authorization',
-};
 
 interface CustomRequest extends Request {
   apiKey: IApiKey;
@@ -45,7 +41,3 @@ export const checkPermission = (permission: string) => {
     return next();
   };
 };
-
-export const asyncHandler =
-  (fn: Function) => (req: Request, res: Response, next: NextFunction) =>
-    Promise.resolve(fn(req, res, next)).catch(next);
