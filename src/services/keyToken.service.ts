@@ -1,5 +1,6 @@
 import { ICreateKeyToken, IKeyToken } from '@/interfaces';
 import { keyTokenModel } from '@/models';
+import { Document } from 'mongoose';
 
 export class KeyTokenService {
   static createKeyToken = async ({
@@ -39,9 +40,9 @@ export class KeyTokenService {
     }
   };
 
-  static findKeyToken = async (userId: string): Promise<IKeyToken> => {
+  static findByUserId = async (userId: string): Promise<IKeyToken> => {
     try {
-      const token = await keyTokenModel.findOne({ user: userId });
+      const token = await keyTokenModel.findOne({ user: userId }).lean();
       return token;
     } catch (error) {
       return error;
@@ -50,7 +51,52 @@ export class KeyTokenService {
 
   static deleteKeyToken = async (keyId: string): Promise<IKeyToken> => {
     try {
-      const token = await keyTokenModel.findByIdAndRemove(keyId);
+      const token = await keyTokenModel.findByIdAndRemove(keyId).lean();
+      return token;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  static findByRefreshToken = async (
+    refreshToken: string,
+  ): Promise<
+    Document<unknown, {}, IKeyToken> &
+      IKeyToken &
+      Required<{
+        _id: string;
+      }>
+  > => {
+    try {
+      const token = await keyTokenModel.findOne({ refreshToken });
+      return token;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  static findByRefreshTokenUsed = async (
+    refreshToken: string,
+  ): Promise<IKeyToken> => {
+    try {
+      const token = await keyTokenModel
+        .findOne({
+          refreshTokenUsed: refreshToken,
+        })
+        .lean();
+      return token;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  static deleteKeyByUserId = async (userId: string): Promise<IKeyToken> => {
+    try {
+      const token = await keyTokenModel
+        .findOneAndDelete({
+          user: userId,
+        })
+        .lean();
       return token;
     } catch (error) {
       return error;

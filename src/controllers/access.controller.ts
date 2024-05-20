@@ -4,6 +4,13 @@ import { AuthService } from '@/services/access.service';
 import { Request, Response, NextFunction } from 'express';
 
 class AccessController {
+  public static handleRefreshToken = async (req: Request, res: Response) => {
+    new OK({
+      message: 'Get token successfully',
+      metadata: await AuthService.handleRefreshToken(req.body.refreshToken),
+    }).send(res);
+  };
+
   public static signUp = async (req: Request, res: Response) => {
     new CREATED({
       message: 'User created successfully',

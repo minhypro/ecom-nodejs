@@ -1,4 +1,4 @@
-import { createTokenPair } from '@/auth/authUtils';
+import { createTokenPair, verifyJWT } from '@/auth/authUtils';
 import { RoleEnum } from '@/enums/auth.enum';
 import { shopModel } from '@/models/shop.model';
 import { pickData } from '@/utils';
@@ -11,6 +11,48 @@ import { ApiKeyService } from './apiKey.service';
 import { IKeyToken } from '@/interfaces';
 
 export class AuthService {
+  static handleRefreshToken = async (refreshToken: string) => {
+    const foundToken =
+      await KeyTokenService.findByRefreshTokenUsed(refreshToken);
+
+    if (foundToken) {
+      const { userId, email } = verifyJWT(refreshToken, foundToken.privateKey);
+      console.log({ userId, email });
+
+      await KeyTokenService.deleteKeyByUserId(userId);
+      throw new AuthorizeFailed('Token has been used');
+    }
+
+    const holderToken = await KeyTokenService.findByRefreshToken(refreshToken);
+    if (!holderToken) throw new AuthorizeFailed('Token not found');
+
+    const { userId, email } = verifyJWT(refreshToken, holderToken.privateKey);
+    console.log('[2]---', { userId, email });
+
+    const foundShop = await ShopService.findByEmail({ email });
+    if (!foundShop) throw new AuthorizeFailed('Shop not found');
+
+    const tokens = createTokenPair(
+      { userId, email },
+      holderToken.publicKey,
+      holderToken.privateKey,
+    );
+
+    await holderToken.updateOne({
+      $set: {
+        refreshToken: tokens.refreshToken,
+      },
+      $addToSet: {
+        refreshTokenUsed: refreshToken,
+      },
+    });
+
+    return {
+      user: { userId, email },
+      tokens,
+    };
+  };
+
   static logout = async (keyStore: IKeyToken) => {
     await KeyTokenService.deleteKeyToken(keyStore._id);
     return {

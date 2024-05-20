@@ -39,14 +39,14 @@ export const authentication = asyncHandler(
     const userId = req.headers[HEADER.CLIENT_ID]?.toString();
     if (!userId) throw new BadRequestError('Invalid request');
 
-    const keyStore = await KeyTokenService.findKeyToken(userId);
+    const keyStore = await KeyTokenService.findByUserId(userId);
     if (!keyStore) throw new AuthorizeFailed('Key token not found');
 
     const accessToken = req.headers[HEADER.AUTHORIZATION]?.toString();
     if (!accessToken) throw new AuthorizeFailed('Token is required');
 
     try {
-      const decodedUser = JWT.verify(
+      const decodedUser = verifyJWT(
         accessToken,
         keyStore.publicKey,
       ) as ITokenPayload;
@@ -59,3 +59,12 @@ export const authentication = asyncHandler(
     } catch (error) {}
   },
 );
+
+export const verifyJWT = (token: string, scretKey: string) => {
+  try {
+    const decoded = JWT.verify(token, scretKey) as ITokenPayload;
+    return decoded;
+  } catch (error) {
+    return null;
+  }
+};
