@@ -1,16 +1,24 @@
 import { createTokenPair, verifyJWT } from '@/auth/authUtils';
 import { RoleEnum } from '@/enums/auth.enum';
-import { shopModel } from '@/models/shop.model';
+import { accountModel } from '@/models/account.model';
 import { pickData } from '@/utils';
 import bcrypt from 'bcrypt';
 import crypto from 'node:crypto';
 import { KeyTokenService } from './keyToken.service';
 import { AuthorizeFailed, BadRequestError } from '@/core/error.response';
-import { ShopService } from './shop.service';
+import { AccountService } from './account.service';
 import { ApiKeyService } from './apiKey.service';
 import { IKeyToken } from '@/interfaces';
+import dayjs from 'dayjs';
 
 export class AuthService {
+  static checkStatus = async (keyStore: IKeyToken) => {
+    const isExpired = keyStore.expiredAt < new Date();
+    return {
+      status: isExpired ? 'expired' : 'good',
+    };
+  };
+
   static handleRefreshToken = async (refreshToken: string) => {
     const foundToken =
       await KeyTokenService.findByRefreshTokenUsed(refreshToken);
@@ -29,8 +37,8 @@ export class AuthService {
     const { userId, email } = verifyJWT(refreshToken, holderToken.privateKey);
     console.log('[2]---', { userId, email });
 
-    const foundShop = await ShopService.findByEmail({ email });
-    if (!foundShop) throw new AuthorizeFailed('Shop not found');
+    const foundAccount = await AccountService.findByEmail({ email });
+    if (!foundAccount) throw new AuthorizeFailed('Account not found');
 
     const tokens = createTokenPair(
       { userId, email },
@@ -41,6 +49,7 @@ export class AuthService {
     await holderToken.updateOne({
       $set: {
         refreshToken: tokens.refreshToken,
+        expiredAt: dayjs().add(1, 'minute').toDate(),
       },
       $addToSet: {
         refreshTokenUsed: refreshToken,
@@ -61,51 +70,54 @@ export class AuthService {
   };
 
   static login = async ({ email, password }) => {
-    const foundShop = await ShopService.findByEmail({ email });
-    if (!foundShop) throw new AuthorizeFailed('Shop not found');
+    const foundAccount = await AccountService.findByEmail({ email });
+    if (!foundAccount) throw new AuthorizeFailed('Account not found');
 
-    const match = bcrypt.compareSync(password, foundShop.password);
+    const match = bcrypt.compareSync(password, foundAccount.password);
     if (!match) throw new AuthorizeFailed('Wrong password');
 
     const privateKey = crypto.randomBytes(64).toString('hex');
     const publicKey = crypto.randomBytes(64).toString('hex');
 
     const tokens = createTokenPair(
-      { userId: foundShop._id, email },
+      { userId: foundAccount._id, email },
       publicKey,
       privateKey,
     );
 
     await KeyTokenService.createKeyToken({
-      userId: foundShop._id,
+      userId: foundAccount._id,
       publicKey,
       privateKey,
       refreshToken: tokens.refreshToken,
     });
 
     return {
-      shop: pickData({ fields: ['_id', 'email', 'name'], object: foundShop }),
+      account: pickData({
+        fields: ['_id', 'email', 'name'],
+        object: foundAccount,
+      }),
       tokens,
     };
   };
 
   static signUp = async ({ name, email, password }) => {
-    const shopHolder = await shopModel.findOne({ email }).lean();
-    if (shopHolder) {
-      throw new BadRequestError('Shop already exists');
+    const accountHolder = await accountModel.findOne({ email }).lean();
+    if (accountHolder) {
+      throw new BadRequestError('Account already exists');
     }
 
     ApiKeyService.generate();
 
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const newShop = await shopModel.create({
+    const newAccount = await accountModel.create({
       name,
       email,
       password: hashedPassword,
       roles: RoleEnum.SHOP,
     });
 
-    if (newShop) {
+    if (newAccount) {
       // Not use this version because it's cost too much time to generate key pair
       // Create privateKey (use to sign token), publicKey (use to verify token)
 
@@ -125,13 +137,13 @@ export class AuthService {
       const publicKey = crypto.randomBytes(64).toString('hex');
 
       const tokens = createTokenPair(
-        { userId: newShop._id, email },
+        { userId: newAccount._id, email },
         publicKey,
         privateKey,
       );
 
       const storedKeyToken = await KeyTokenService.createKeyToken({
-        userId: newShop._id,
+        userId: newAccount._id,
         publicKey,
         privateKey,
         refreshToken: tokens.refreshToken,
@@ -145,7 +157,10 @@ export class AuthService {
       }
 
       return {
-        shop: pickData({ fields: ['_id', 'email', 'name'], object: newShop }),
+        account: pickData({
+          fields: ['_id', 'email', 'name'],
+          object: newAccount,
+        }),
         tokens,
       };
       // const token = await

@@ -1,7 +1,7 @@
 import {
   KEY_TOKEN_COLLECTION,
   KEY_TOKEN_DOCUMENT,
-  SHOP_DOCUMENT,
+  ACCOUNT_DOCUMENT,
 } from '@/constants';
 import { IKeyToken } from '@/interfaces';
 import { model, Schema } from 'mongoose';
@@ -11,7 +11,7 @@ const keyTokenSchema = new Schema<IKeyToken>(
     user: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: SHOP_DOCUMENT,
+      ref: ACCOUNT_DOCUMENT,
     },
     publicKey: {
       type: String,
@@ -27,6 +27,10 @@ const keyTokenSchema = new Schema<IKeyToken>(
     },
     refreshToken: {
       type: String,
+      required: true,
+    },
+    expiredAt: {
+      type: Date,
       required: true,
     },
   },

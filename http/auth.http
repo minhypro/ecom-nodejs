@@ -2,8 +2,8 @@
 @baseURL = http://localhost:5001/v1/api
 @pcHomeApi = 94fc697eaf79cd1b49446d31945c228232d17c6bc90389702453c57202dc979f6b3fc7c981ff1d63cf7d0517c5e0191b740fe6c54e656849957e2cce3120eac9
 @laptopApi = 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
-@clientId = 6645af9015b683dc0a75620c
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQ1YWY5MDE1YjY4M2RjMGE3NTYyMGMiLCJlbWFpbCI6ImV4YW1wbGUxMjJAZW1haWwuY29tIiwiaWF0IjoxNzE2MTk1NDYyLCJleHAiOjE3MTYzNjgyNjJ9.zaxe4XT_7OvKXJj39snXkomE-DVNIsan3QiW9n63iew
+@clientId = 664b5107b238ec99c00947f2
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjRiNTEwN2IyMzhlYzk5YzAwOTQ3ZjIiLCJlbWFpbCI6Imt5dS5sZS45NUBnbWFpbC5jb20iLCJpYXQiOjE3MTYyMTQyODksImV4cCI6MTcxNjM4NzA4OX0.ifEhNYiYLvt26Hbf6fABWyQTABP2S3J79YapmyWzYjg
 
 ### signup
 POST {{ baseURL }}/signup
@@ -11,20 +11,29 @@ Content-Type: application/json
 x-api-key: {{pcHomeApi}}
 
 {
-    "name": "Shop check2",
-    "email": "example122@email.com",
-	"password": "password"
+    "name": "Admin",
+    "email": "kyu.le.95@gmail.com",
+	"password": "minhypro@123"
 }
 
 ### login
 POST {{ baseURL }}/login
 Content-Type: application/json
-x-api-key: {{laptopApi}}
+x-api-key: {{pcHomeApi}}
 
 {
-    "email": "example122@email.com",
-	"password": "password"
+    "email": "kyu.le.95@gmail.com",
+	"password": "minhypro@123"
 }
+
+### Check status
+POST {{ baseURL }}/check
+Content-Type: application/json
+x-api-key: {{pcHomeApi}}
+x-client-id: {{clientId}}
+authorization: {{accessToken}}
+    
+{}
 
 ### logout
 POST {{ baseURL }}/logout
@@ -33,18 +42,15 @@ x-api-key: {{pcHomeApi}}
 x-client-id: {{clientId}}
 authorization: {{accessToken}}
 
-{
-    "email": "example122@email.com",
-	"password": "password"
-}
+{}
 
 ### handleRefreshToken
 POST {{ baseURL }}/handleRefreshToken
 Content-Type: application/json
-x-api-key: {{laptopApi}}
+x-api-key: {{pcHomeApi}}
 x-client-id: {{clientId}}
 authorization: {{accessToken}}
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQ1YWY5MDE1YjY4M2RjMGE3NTYyMGMiLCJlbWFpbCI6ImV4YW1wbGUxMjJAZW1haWwuY29tIiwiaWF0IjoxNzE2MTk1NDYyLCJleHAiOjE3MTY4MDAyNjJ9.bQ_QsZw008x2nYyfBMLKqhxaH04c1ilh7r6xfHxUfKw"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjRiNTEwN2IyMzhlYzk5YzAwOTQ3ZjIiLCJlbWFpbCI6Imt5dS5sZS45NUBnbWFpbC5jb20iLCJpYXQiOjE3MTYyMTQyODksImV4cCI6MTcxNjgxOTA4OX0"
 }

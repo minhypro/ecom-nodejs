@@ -1,3 +1,3 @@
 export * from './keyToken.model';
-export * from './shop.model';
+export * from './account.model';
 export * from './apiKey.model';

@@ -7,6 +7,7 @@ export interface IKeyToken {
   privateKey: string;
   refreshToken: string;
   refreshTokenUsed: string[];
+  expiredAt: Date;
 }
 
 export interface ICreateKeyToken {

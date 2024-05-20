@@ -4,6 +4,13 @@ import { AuthService } from '@/services/access.service';
 import { Request, Response, NextFunction } from 'express';
 
 class AccessController {
+  public static checkStatus = async (req: IRequest, res: Response) => {
+    new OK({
+      message: 'Check status successfully',
+      metadata: await AuthService.checkStatus(req.keyStore),
+    }).send(res);
+  };
+
   public static handleRefreshToken = async (req: Request, res: Response) => {
     new OK({
       message: 'Get token successfully',

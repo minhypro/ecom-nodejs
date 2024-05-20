@@ -10,11 +10,12 @@ accessRouter.post('/login', asyncHandler(AccessController.login));
 // Authentication
 accessRouter.use(authentication);
 
-// Logout
 accessRouter.post('/logout', asyncHandler(AccessController.logout));
 accessRouter.post(
   '/handleRefreshToken',
   asyncHandler(AccessController.handleRefreshToken),
 );
+
+accessRouter.post('/check', asyncHandler(AccessController.checkStatus));
 
 export { accessRouter };

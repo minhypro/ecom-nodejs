@@ -1,3 +1,3 @@
 export * from './keyToken.interface';
-export * from './shop.interface';
+export * from './account.interface';
 export * from './apiKey.interface';

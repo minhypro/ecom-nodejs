@@ -1,8 +1,8 @@
-import { SHOP_COLLECTION, SHOP_DOCUMENT } from '@/constants';
-import { IShop } from '@/interfaces';
+import { ACCOUNT_DOCUMENT, ACCOUNT_COLLECTION } from '@/constants';
+import { IAccount } from '@/interfaces';
 import { model, Schema } from 'mongoose';
 
-const shopSchema = new Schema<IShop>(
+const accountSchema = new Schema<IAccount>(
   {
     name: {
       type: String,
@@ -34,8 +34,8 @@ const shopSchema = new Schema<IShop>(
   },
   {
     timestamps: true,
-    collection: SHOP_COLLECTION,
+    collection: ACCOUNT_COLLECTION,
   },
 );
 
-export const shopModel = model(SHOP_DOCUMENT, shopSchema);
+export const accountModel = model(ACCOUNT_DOCUMENT, accountSchema);

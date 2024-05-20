@@ -42,6 +42,9 @@ export const authentication = asyncHandler(
     const keyStore = await KeyTokenService.findByUserId(userId);
     if (!keyStore) throw new AuthorizeFailed('Key token not found');
 
+    // if (keyStore.expiredAt < new Date())
+    //   throw new AuthorizeFailed('Token expired');
+
     const accessToken = req.headers[HEADER.AUTHORIZATION]?.toString();
     if (!accessToken) throw new AuthorizeFailed('Token is required');
 
