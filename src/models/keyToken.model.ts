@@ -29,10 +29,6 @@ const keyTokenSchema = new Schema<IKeyToken>(
       type: String,
       required: true,
     },
-    expiredAt: {
-      type: Date,
-      required: true,
-    },
   },
   {
     timestamps: true,

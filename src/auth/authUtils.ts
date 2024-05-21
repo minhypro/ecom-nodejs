@@ -15,7 +15,7 @@ export const createTokenPair = (
   try {
     const accessToken = JWT.sign(payload, publicKey, {
       // algorithm: 'RS256',
-      expiresIn: '2 days',
+      expiresIn: '1h',
     });
     const refreshToken = JWT.sign(payload, privateKey, {
       // algorithm: 'RS256',
@@ -42,9 +42,6 @@ export const authentication = asyncHandler(
     const keyStore = await KeyTokenService.findByUserId(userId);
     if (!keyStore) throw new AuthorizeFailed('Key token not found');
 
-    // if (keyStore.expiredAt < new Date())
-    //   throw new AuthorizeFailed('Token expired');
-
     const accessToken = req.headers[HEADER.AUTHORIZATION]?.toString();
     if (!accessToken) throw new AuthorizeFailed('Token is required');
 
@@ -59,7 +56,9 @@ export const authentication = asyncHandler(
 
       req.keyStore = keyStore;
       next();
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   },
 );
 
@@ -68,6 +67,6 @@ export const verifyJWT = (token: string, scretKey: string) => {
     const decoded = JWT.verify(token, scretKey) as ITokenPayload;
     return decoded;
   } catch (error) {
-    return null;
+    throw new AuthorizeFailed('Invalid token');
   }
 };

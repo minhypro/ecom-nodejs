@@ -1,6 +1,5 @@
 import { ICreateKeyToken, IKeyToken } from '@/interfaces';
 import { keyTokenModel } from '@/models';
-import dayjs from 'dayjs';
 import { Document } from 'mongoose';
 
 export class KeyTokenService {
@@ -26,7 +25,6 @@ export class KeyTokenService {
           privateKey,
           refreshTokenUsed: [],
           refreshToken,
-          expiredAt: dayjs().add(1, 'minute').toDate(),
         },
         options = { upsert: true, new: true };
 

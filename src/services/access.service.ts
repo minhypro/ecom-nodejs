@@ -9,13 +9,11 @@ import { AuthorizeFailed, BadRequestError } from '@/core/error.response';
 import { AccountService } from './account.service';
 import { ApiKeyService } from './apiKey.service';
 import { IKeyToken } from '@/interfaces';
-import dayjs from 'dayjs';
 
 export class AuthService {
   static checkStatus = async (keyStore: IKeyToken) => {
-    const isExpired = keyStore.expiredAt < new Date();
     return {
-      status: isExpired ? 'expired' : 'good',
+      status: 'good',
     };
   };
 
@@ -49,7 +47,6 @@ export class AuthService {
     await holderToken.updateOne({
       $set: {
         refreshToken: tokens.refreshToken,
-        expiredAt: dayjs().add(1, 'minute').toDate(),
       },
       $addToSet: {
         refreshTokenUsed: refreshToken,
