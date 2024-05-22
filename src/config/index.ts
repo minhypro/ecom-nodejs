@@ -9,6 +9,12 @@ const dev = {
     PORT: MONGO_PORT || '27017',
     NAME: MONGO_NAME || 'shopDev',
   },
+  aws: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+    bucket: process.env.AWS_BUCKET,
+  },
 };
 
 const pro = {

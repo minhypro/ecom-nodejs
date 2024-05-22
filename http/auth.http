@@ -1,7 +1,8 @@
 # baseURL
 @baseURL = http://localhost:5001/v1/api
-@pcHomeApi = 94fc697eaf79cd1b49446d31945c228232d17c6bc90389702453c57202dc979f6b3fc7c981ff1d63cf7d0517c5e0191b740fe6c54e656849957e2cce3120eac9
-@laptopApi = 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
+# laptopApi 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
+# desktopApi 94fc697eaf79cd1b49446d31945c228232d17c6bc90389702453c57202dc979f6b3fc7c981ff1d63cf7d0517c5e0191b740fe6c54e656849957e2cce3120eac9
+@apiKey = 7b7fd430f3af68d9c83f71a9a0797dfef28ee540d21d94a0c98d1c6a7b5f26b1d89d9cfdcd6ccccfec6aed44662191242ccf9cfe4b973ed6ef36bdc7dd89c9fe
 @clientId = 664c974e1feebe363320f230
 @accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjRjOTc0ZTFmZWViZTM2MzMyMGYyMzAiLCJlbWFpbCI6Imt5dS5sZS45NUBnbWFpbC5jb20iLCJpYXQiOjE3MTYyOTc1OTMsImV4cCI6MTcxNjI5NzY1M30.eOg0EKVNhB9KIInl4-ewOGvGBILTzJm0W3mSFCWhhMI
 @refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjRjOTc0ZTFmZWViZTM2MzMyMGYyMzAiLCJlbWFpbCI6Imt5dS5sZS45NUBnbWFpbC5jb20iLCJpYXQiOjE3MTYyOTc1OTMsImV4cCI6MTcxNjkwMjM5M30.UcMQ9_NGqDt8zSybzxfxrZ8C-gXCXEXpgi1aibgjoWk
@@ -9,7 +10,7 @@
 ### signup
 POST {{ baseURL }}/signup
 Content-Type: application/json
-x-api-key: {{laptopApi}}
+x-api-key: {{apiKey}}
 
 {
     "name": "Admin",
@@ -20,7 +21,7 @@ x-api-key: {{laptopApi}}
 ### login
 POST {{ baseURL }}/login
 Content-Type: application/json
-x-api-key: {{laptopApi}}
+x-api-key: {{apiKey}}
 
 {
     "email": "kyu.le.95@gmail.com",
@@ -30,7 +31,7 @@ x-api-key: {{laptopApi}}
 ### Check status
 POST {{ baseURL }}/check
 Content-Type: application/json
-x-api-key: {{laptopApi}}
+x-api-key: {{apiKey}}
 x-client-id: {{clientId}}
 authorization: {{accessToken}}
     
@@ -39,7 +40,7 @@ authorization: {{accessToken}}
 ### logout
 POST {{ baseURL }}/logout
 Content-Type: application/json
-x-api-key: {{laptopApi}}
+x-api-key: {{apiKey}}
 x-client-id: {{clientId}}
 authorization: {{accessToken}}
 
@@ -48,7 +49,7 @@ authorization: {{accessToken}}
 ### handleRefreshToken
 POST {{ baseURL }}/handleRefreshToken
 Content-Type: application/json
-x-api-key: {{laptopApi}}
+x-api-key: {{apiKey}}
 x-client-id: {{clientId}}
 authorization: {{accessToken}}
 
