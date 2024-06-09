@@ -1,6 +1,6 @@
 import { asyncHandler } from '@/helpers/asyncHandler';
 import JWT, { VerifyErrors } from 'jsonwebtoken';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import { HEADER } from '@/constants/header.keys.const';
 import { AuthorizeFailed, BadRequestError } from '@/core/error.response';
 import { KeyTokenService } from '@/services/keyToken.service';
@@ -31,7 +31,9 @@ export const createTokenPair = (
     });
 
     return { accessToken, refreshToken };
-  } catch (error) {}
+  } catch (error) {
+    /* TODO: Log error */
+  }
 };
 
 export const authentication = asyncHandler(

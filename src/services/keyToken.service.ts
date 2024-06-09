@@ -61,7 +61,7 @@ export class KeyTokenService {
   static findByRefreshToken = async (
     refreshToken: string,
   ): Promise<
-    Document<unknown, {}, IKeyToken> &
+    Document<unknown, object, IKeyToken> &
       IKeyToken &
       Required<{
         _id: string;

@@ -1,13 +1,13 @@
 import { CREATED, OK } from '@/core/success.response';
 import { IRequest } from '@/interfaces/app.interface';
 import { AuthService } from '@/services/access.service';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
 class AccessController {
   public static checkStatus = async (req: IRequest, res: Response) => {
     new OK({
       message: 'Check status successfully',
-      metadata: await AuthService.checkStatus(req.keyStore),
+      metadata: await AuthService.checkStatus(),
     }).send(res);
   };
 

@@ -1,8 +1,7 @@
-import { CREATED, OK } from '@/core/success.response';
+import { OK } from '@/core/success.response';
 import { IRequest } from '@/interfaces/app.interface';
-import { AuthService } from '@/services/access.service';
 import { AwsServices } from '@/services/aws.service';
-import { Request, Response, NextFunction } from 'express';
+import { Response } from 'express';
 
 class StorageController {
   public static Upload = async (req: IRequest, res: Response) => {

@@ -11,6 +11,7 @@
     "start": "dotenv -e .env node dist/server.js",
     "dev": "dotenv -e .env.local nodemon",
     "format": "prettier src --write",
+    "lint": "eslint src --max-warnings=0",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [],
@@ -34,17 +35,22 @@
     "tslib": "^2.6.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.4.0",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.3",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.3",
     "@types/morgan": "^1.9.5",
     "@types/node": "^20.6.2",
+    "eslint": "9.x",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "globals": "^15.4.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^7.12.0"
   }
 }

@@ -5,7 +5,7 @@ import AWS from 'aws-sdk';
 import S3, { ManagedUpload } from 'aws-sdk/clients/s3';
 import { BadRequestError } from '@/core/error.response';
 
-const upload = multer({
+const _upload = multer({
   storage: multer.memoryStorage(),
 });
 

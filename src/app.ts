@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -32,19 +32,17 @@ app.use((_req, _res, next) => {
   next(error);
 });
 
-app.use(
-  (error: ErrorResponse, _req: Request, res: Response, _next: NextFunction) => {
-    const statusCode = error.status || StatusCode.INTERNAL_SERVER_ERROR;
-    const message =
-      error.message || ReasonStatusCode[StatusCode.INTERNAL_SERVER_ERROR];
+app.use((error: ErrorResponse, _req: Request, res: Response) => {
+  const statusCode = error.status || StatusCode.INTERNAL_SERVER_ERROR;
+  const message =
+    error.message || ReasonStatusCode[StatusCode.INTERNAL_SERVER_ERROR];
 
-    const response = {
-      message: message,
-      status: statusCode,
-    };
+  const response = {
+    message: message,
+    status: statusCode,
+  };
 
-    res.status(statusCode).json(response);
-  },
-);
+  res.status(statusCode).json(response);
+});
 
 export default app;

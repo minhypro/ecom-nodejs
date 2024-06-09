@@ -11,7 +11,7 @@ import { ApiKeyService } from './apiKey.service';
 import { IKeyToken } from '@/interfaces';
 
 export class AuthService {
-  static checkStatus = async (keyStore: IKeyToken) => {
+  static checkStatus = async () => {
     return {
       status: 'good',
     };

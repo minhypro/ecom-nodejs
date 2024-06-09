@@ -25,7 +25,9 @@ export const checkApiKey = async (
 
     req.apiKey = apiKey;
     return next();
-  } catch (error) {}
+  } catch (error) {
+    /* TODO: Log error */
+  }
 };
 
 export const checkPermission = (permission: string) => {

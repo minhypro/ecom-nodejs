@@ -1,10 +1,8 @@
 import { authentication } from '@/auth/authUtils';
 import { AccessController } from '@/controllers';
 import { asyncHandler } from '@/helpers/asyncHandler';
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 
-import { ManagedUpload } from 'aws-sdk/clients/s3';
-import config from '@config';
 import { StorageController } from '@/controllers/storage.controller';
 
 const accessRouter = express.Router();

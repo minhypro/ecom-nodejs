@@ -4,7 +4,7 @@ import { Response } from 'express';
 class SussessResponse {
   message: string;
   status: number;
-  metadata: any;
+  metadata: unknown;
 
   constructor({ message, statusCode = StatusCode.OK, metadata = {} }) {
     this.message = message || ReasonStatusCode[statusCode];
@@ -24,7 +24,7 @@ export class OK extends SussessResponse {
 }
 
 export class CREATED extends SussessResponse {
-  options: {};
+  options: object;
 
   constructor({
     options = {},
